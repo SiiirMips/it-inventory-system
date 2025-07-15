@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+IT Inventory System
+Intelligente IT-Inventarisierungssoftware für effizientes Asset Management
 
-## Getting Started
+Willkommen im GitHub-Repository des IT Inventory System! Dieses Projekt zielt darauf ab, eine umfassende und intuitive Softwarelösung für das Management von IT-Assets zu entwickeln. Inspiriert von den Stärken etablierter Tools wie Lansweeper, Snipe-IT und GLPI, streben wir danach, eine überlegene Plattform für die Inventarisierung, das Lifecycle-Management und den Support Ihrer gesamten IT-Infrastruktur zu schaffen.
+Status des Projekts
 
-First, run the development server:
+Dieses Projekt befindet sich aktiv in der Entwicklung. Es handelt sich um ein fortlaufendes Vorhaben, und Funktionen werden schrittweise implementiert und verbessert. Aktuell konzentrieren wir uns auf die Entwicklung des Frontends und der grundlegenden Asset-Verwaltungsfunktionen.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Feedback und Beiträge sind in dieser frühen Phase sehr willkommen!
+Über den Entwickler
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Dieses Projekt wird entwickelt von:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Marvin Blöcher
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    Angehender Fachinformatiker mit einer Leidenschaft für Softwareentwicklung und IT-Infrastruktur.
 
-## Learn More
+Technologien (Frontend)
 
-To learn more about Next.js, take a look at the following resources:
+    Next.js: Modernes React-Framework für Webanwendungen (App Router).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    React: Für die Benutzeroberfläche.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    TypeScript: Für Typsicherheit und bessere Code-Qualität.
 
-## Deploy on Vercel
+    Tailwind CSS v4: Für schnelles und flexibles Styling.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    shadcn/ui: Komponentenbibliothek für ein ansprechendes und konsistentes UI.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    @tanstack/react-table: Für leistungsstarke und flexible Tabellen.
+
+Erste Schritte (für Entwickler)
+
+Da sich das Projekt noch in der Entwicklung befindet, sind die folgenden Schritte primär für Entwickler gedacht, die den Code lokal ausführen möchten:
+
+    Repository klonen:
+
+    git clone https://github.com/SiiirMips/it-inventory-system.git
+    cd it-inventory-system
+
+    Abhängigkeiten installieren:
+
+    npm install
+
+    Entwicklungsserver starten:
+
+    npm run dev
+
+    Die Anwendung sollte dann unter http://localhost:3000 verfügbar sein.
+
+Lizenz
+
+Dieses Projekt ist unter der MIT License lizenziert. Weitere Details finden Sie in der LICENSE-Datei im Repository. Der Basiscoded ist Open Source, während zukünftige erweiterte Funktionen Teil eines proprietären Abo-Modells sein werden.
