@@ -19,24 +19,23 @@ import {
   LayoutDashboard,
   LifeBuoy,
   Lightbulb,
-  Map,
-  MapPin,
+  Map, // Nicht mehr direkt verwendet, aber behalten, falls noch benötigt
+  MapPin, // Nicht mehr direkt verwendet, aber behalten, falls noch benötigt
   Network,
   Package,
-  PieChart,
+  PieChart, // Nicht mehr direkt verwendet, aber behalten, falls noch benötigt
   PlusSquare,
   Send,
   Server,
-  Settings,
-  Settings2,
-  SquareTerminal,
+  Settings, // Für Hauptpunkt "Einstellungen" und "Administration"
+  Settings2, // Alternative für Einstellungen
+  SquareTerminal, // Nicht mehr direkt verwendet, aber behalten, falls noch benötigt
   UserCog,
   Zap,
   History,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
 import { NavSecondary } from "@/components/nav-secondary"
 import { NavUser } from "@/components/nav-user"
 import {
@@ -116,25 +115,26 @@ const data = {
         },
       ],
     },
-    {
-      title: "Standorte & Organisation",
-      url: "/locations",
-      icon: MapPin,
-      items: [
-        {
-          title: "Standorte",
-          url: "/locations/overview",
-        },
-        {
-          title: "Abteilungen & Teams",
-          url: "/locations/departments",
-        },
-        {
-          title: "Benutzer",
-          url: "/locations/users",
-        },
-      ],
-    },
+    // "Standorte & Organisation" wurde entfernt, da die Unterpunkte nun unter "Einstellungen" sind
+    // {
+    //   title: "Standorte & Organisation",
+    //   url: "/locations",
+    //   icon: MapPin,
+    //   items: [
+    //     {
+    //       title: "Standorte",
+    //       url: "/locations/overview",
+    //     },
+    //     {
+    //       title: "Abteilungen & Teams",
+    //       url: "/locations/departments",
+    //     },
+    //     {
+    //       title: "Benutzer",
+    //       url: "/locations/users",
+    //     },
+    //   ],
+    // },
     {
       title: "Lifecycle & Wartung",
       url: "/lifecycle",
@@ -230,48 +230,31 @@ const data = {
         },
       ],
     },
+        {
+      title: "Einstellungen",
+      url: "/settings", // Hauptseite für Einstellungen
+      icon: Settings, // Wiederverwendung des Settings-Icons
+      items: [
+        { title: "Benutzerdefinierte Felder", url: "/settings/custom-fields" },
+        { title: "Statusbezeichnungen", url: "/settings/statuslabels" },
+        { title: "Asset Modelle", url: "/settings/asset-models" },
+        { title: "Kategorien", url: "/settings/categories" },
+        { title: "Hersteller", url: "/settings/manufacturers" },
+        { title: "Lieferanten", url: "/settings/suppliers" },
+        { title: "Abteilungen", url: "/settings/departments" }, // Aus "Standorte & Organisation" verschoben
+        { title: "Standorte", url: "/settings/locations" },     // Aus "Standorte & Organisation" verschoben
+        { title: "Firmen", url: "/settings/companies" },
+      ],
+    },
+
+
     {
       title: "Administration",
       url: "/admin",
       icon: Settings, // Allgemeines Zahnrad-Icon
-      items: [
-        {
-          title: "Benutzer & Rollen",
-          url: "/admin/users",
-          icon: UserCog, // Passt gut
-        },
-        {
-          title: "Integrationen",
-          url: "/admin/integrations",
-          icon: Zap, // Symbolisiert Verbindungen
-        },
-        {
-          title: "Systemeinstellungen",
-          url: "/admin/settings",
-          icon: Globe, // Oder ein anderes spezifisches Einstellungs-Icon
-        },
-      ],
     },
-  ],
-  // Die folgenden Strukturen sind aus dem Original-Template und müssen je nach Bedarf angepasst oder entfernt werden
-  // Für deine spezifischen "Projekte" könnten das Tags, Custom Groups oder andere Filter sein, die du in "Assets" integrieren könntest.
-  // Wenn nicht benötigt, die NavProjects-Komponente anpassen oder entfernen.
-  projects: [
-    {
-      name: "IT-Hardware Rollout Q3",
-      url: "#",
-      icon: HardDrive, // Habe das Icon passend zur IT gewählt
-    },
-    {
-      name: "Software Lizenz Audit 2025",
-      url: "#",
-      icon: AppWindow, // Habe das Icon passend zur IT gewählt
-    },
-    {
-      name: "Netzwerkgeräte Upgrade",
-      url: "#",
-      icon: Network, // Habe das Icon passend zur IT gewählt
-    },
+   
+
   ],
   navSecondary: [ // Kann für allgemeine Links wie Support, Feedback, Dokumentation genutzt werden
     {
@@ -291,26 +274,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
-              <a href="#">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
-                </div>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
-                </div>
-              </a>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+        <div className="flex items-center justify-center w-full py-4">
+          <a href="/dashboard">
+            <img 
+              src="/logo.svg" 
+              alt="IT Inventory System Logo" 
+              className="h-18 w-auto" // Stelle sicher, dass logo.svg im public-Ordner ist
+            />
+          </a>
+        </div>
       </SidebarHeader>
       <SidebarContent>
+        {/* Hauptnavigation */}
         <NavMain items={data.navMain} />
-        <NavProjects projects={data.projects} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        
+        {/* NavProjects wurde entfernt, da es in der neuen Struktur nicht mehr explizit benötigt wird.
+            Wenn du es doch brauchst, musst du es hier wieder einfügen und die data.projects Struktur befüllen. */}
+        {/* {data.projects && <NavProjects projects={data.projects} />} */}
+        
+        {/* Sekundäre Navigation (z.B. Support, Feedback) */}
+        {data.navSecondary && <NavSecondary items={data.navSecondary} className="mt-auto" />}
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

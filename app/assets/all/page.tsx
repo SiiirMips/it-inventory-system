@@ -7,19 +7,32 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel, // Wichtig für Pagination
+  getPaginationRowModel,
+  getSortedRowModel, // Neu für Sortierung
   useReactTable,
+  SortingState, // Neu für Sortierung
 } from "@tanstack/react-table"
+
+
 
 // Lucide Icons
 import {
   PlusCircle,
   ChevronDown,
+  ChevronUp,
   ListFilter,
+  Download,
+  FileSpreadsheet,
+  FileText,
+  ArrowUpDown,
+  Copy,
+  CheckSquare,
+  Pencil,
+  Trash2,
 } from "lucide-react"
 
 // Shadcn/ui Komponenten
-import { AppSidebar } from "@/components/app-sidebar" // Deine Sidebar-Komponente (Pfad angepasst von app-sidebar zu sidebar)
+import { AppSidebar } from "@/components/app-sidebar" 
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -46,11 +59,13 @@ import {
 } from "@/components/ui/table"
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
-}
-from "@/components/ui/dropdown-menu"
+  DropdownMenuCheckboxItem, // Dieser Import fehlt
+} from "@/components/ui/dropdown-menu"
 import {
   Select,
   SelectContent,
@@ -66,6 +81,12 @@ import {
   PaginationNext,
   PaginationLink,
 } from "@/components/ui/pagination" // Neu für Pagination
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip" // Neu für Tooltips
 
 
 // 1. Definiere dein Asset-Datenmodell (TypeScript Interface)
@@ -103,7 +124,18 @@ const mockAssets: Asset[] = Array.from({ length: 50 }, (_, i) => {
 const columns: ColumnDef<Asset>[] = [
   {
     accessorKey: "id",
-    header: "Asset ID",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Asset ID
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
     cell: ({ row }) => (
       <Link href={`/assets/${row.original.id}`} className="font-medium text-blue-600 hover:underline">
         {row.getValue("id")}
@@ -112,31 +144,190 @@ const columns: ColumnDef<Asset>[] = [
   },
   {
     accessorKey: "name",
-    header: "Name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "type",
-    header: "Typ",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Typ
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "status",
-    header: "Status",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "location",
-    header: "Standort",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Standort
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "assignedTo",
-    header: "Zugewiesen an",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Zugewiesen an
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "serialNumber",
-    header: "Seriennummer",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Seriennummer
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
   },
   {
     accessorKey: "lastSeen",
-    header: "Zuletzt gesehen",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="h-auto p-0 font-medium hover:bg-transparent"
+        >
+          Zuletzt gesehen
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      )
+    },
+  },
+  {
+    id: "checkout",
+    header: "Zurücknehmen/Herausgeben",
+    cell: ({ row }) => (
+      <Button
+        onClick={() => handleCheckout(row.original.id)}
+        className="bg-pink-500 hover:bg-pink-600 text-white"
+        size="sm"
+      >
+        Herausgeben
+      </Button>
+    ),
+  },
+  {
+    id: "actions",
+    header: "Aktionen",
+    cell: ({ row }) => (
+      <TooltipProvider>
+        <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => handleDuplicate(row.original.id)}
+                className="bg-blue-500 hover:bg-blue-600 text-white h-8 w-8 p-0"
+                size="sm"
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Kopieren</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => handleAssign(row.original.id)}
+                className="bg-gray-700 hover:bg-gray-800 text-white h-8 w-8 p-0"
+                size="sm"
+              >
+                <CheckSquare className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Prüfung</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => handleEdit(row.original.id)}
+                className="bg-orange-500 hover:bg-orange-600 text-white h-8 w-8 p-0"
+                size="sm"
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Bearbeiten</p>
+            </TooltipContent>
+          </Tooltip>
+          
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                onClick={() => handleDelete(row.original.id)}
+                className="bg-red-500 hover:bg-red-600 text-white h-8 w-8 p-0"
+                size="sm"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Löschen</p>
+            </TooltipContent>
+          </Tooltip>
+        </div>
+      </TooltipProvider>
+    ),
   },
 ];
 
@@ -144,9 +335,10 @@ export default function AssetsAllPage() {
   const [data, setData] = React.useState<Asset[]>(mockAssets);
   const [globalFilter, setGlobalFilter] = React.useState("");
   const [columnFilters, setColumnFilters] = React.useState<any[]>([]);
+  const [sorting, setSorting] = React.useState<SortingState>([]);
   const [pagination, setPagination] = React.useState({
     pageIndex: 0, // Startet bei Seite 0
-    pageSize: 10, // Standardmäßig 10 Einträge pro Seite
+    pageSize: 13, // Standardmäßig 15 Einträge pro Seite
   });
 
   const table = useReactTable({
@@ -154,18 +346,95 @@ export default function AssetsAllPage() {
     columns,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(), // Pagination aktivieren
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(), // Sortierung aktivieren
     onGlobalFilterChange: setGlobalFilter,
     onColumnFiltersChange: setColumnFilters,
-    onPaginationChange: setPagination, // Pagination-Zustand aktualisieren
+    onSortingChange: setSorting, // Sortierung-Zustand aktualisieren
+    onPaginationChange: setPagination,
     state: {
       globalFilter,
       columnFilters,
-      pagination, // Pagination-Zustand übergeben
+      sorting, // Sortierung-Zustand übergeben
+      pagination,
     },
   });
 
   const assetTypes = ["Hardware", "Software", "Virtual", "Consumable"];
+
+  // CSV Export Funktion
+  const exportToCSV = () => {
+    const csvData = table.getFilteredRowModel().rows.map(row => {
+      const rowData: any = {};
+      table.getVisibleLeafColumns().forEach(column => {
+        const value = row.getValue(column.id);
+        rowData[column.id] = value;
+      });
+      return rowData;
+    });
+
+    // CSV Header erstellen
+    const headers = table.getVisibleLeafColumns().map(column => {
+      const headerValue = column.columnDef.header;
+      if (typeof headerValue === 'string') {
+        return headerValue;
+      }
+      // Fallback zu column.id wenn header eine Funktion ist
+      return column.id;
+    });
+
+    // CSV Content erstellen
+    const csvContent = [
+      headers.join(','), // Header Zeile
+      ...csvData.map(row => 
+        headers.map(header => {
+          const columnId = table.getVisibleLeafColumns().find(col => {
+            const headerValue = col.columnDef.header;
+            return (typeof headerValue === 'string' ? headerValue : col.id) === header;
+          })?.id || header;
+          
+          let value = row[columnId] || '';
+          // Escape Kommas und Anführungszeichen in CSV
+          if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+            value = `"${value.replace(/"/g, '""')}"`;
+          }
+          return value;
+        }).join(',')
+      )
+    ].join('\n');
+
+    // CSV Download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `assets_export_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  // Platzhalter-Funktionen für die neuen Buttons
+  const handleCheckout = (assetId: string) => {
+    console.log("Herausgeben:", assetId);
+  };
+
+  const handleDuplicate = (assetId: string) => {
+    console.log("Duplizieren:", assetId);
+  };
+
+  const handleAssign = (assetId: string) => {
+    console.log("Zuweisen:", assetId);
+  };
+
+  const handleEdit = (assetId: string) => {
+    console.log("Bearbeiten:", assetId);
+  };
+
+  const handleDelete = (assetId: string) => {
+    console.log("Löschen:", assetId);
+  };
 
   return (
     <SidebarProvider>
@@ -228,32 +497,53 @@ export default function AssetsAllPage() {
               </SelectContent>
             </Select>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="ml-auto">
-                  <ListFilter className="mr-2 size-4" /> Spalten <ChevronDown className="ml-2 size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {table
-                  .getAllColumns()
-                  .filter((column) => column.getCanHide())
-                  .map((column) => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={column.id}
-                        className="capitalize"
-                        checked={column.getIsVisible()}
-                        onCheckedChange={(value) =>
-                          column.toggleVisibility(!!value)
-                        }
-                      >
-                        {column.id}
-                      </DropdownMenuCheckboxItem>
-                    )
-                  })}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {/* Export und Spalten Button Group */}
+            <div className="flex items-center gap-2 ml-auto">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    <Download className="mr-2 size-4" /> Export <ChevronDown className="ml-2 size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem>
+                    <FileSpreadsheet className="mr-2 size-4" />
+                    Als Excel exportieren
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={exportToCSV}>
+                    <FileText className="mr-2 size-4" />
+                    Als CSV exportieren
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline">
+                    <ListFilter className="mr-2 size-4" /> Spalten <ChevronDown className="ml-2 size-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {column.id}
+                        </DropdownMenuCheckboxItem>
+                      )
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
 
           {/* Die shadcn/ui Tabelle */}
@@ -308,23 +598,6 @@ export default function AssetsAllPage() {
               Seite {table.getState().pagination.pageIndex + 1} von {table.getPageCount()}
             </div>
             <div className="flex items-center space-x-2">
-              <Select
-                value={`${table.getState().pagination.pageSize}`}
-                onValueChange={(value) => {
-                  table.setPageSize(Number(value));
-                }}
-              >
-                <SelectTrigger className="h-8 w-[100px]">
-                  <SelectValue placeholder="Pro Seite" />
-                </SelectTrigger>
-                <SelectContent side="top">
-                  {[10, 20, 30, 40, 50].map((pageSize) => (
-                    <SelectItem key={pageSize} value={`${pageSize}`}>
-                      {pageSize}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
@@ -350,3 +623,24 @@ export default function AssetsAllPage() {
     </SidebarProvider>
   )
 }
+
+function handleDuplicate(id: string): void {
+  throw new Error("Function not implemented.")
+}
+
+function handleAssign(id: string): void {
+  throw new Error("Function not implemented.")
+}
+
+function handleEdit(id: string): void {
+  throw new Error("Function not implemented.")
+}
+
+function handleDelete(id: string): void {
+  throw new Error("Function not implemented.")
+}
+
+function handleCheckout(id: string): void {
+  throw new Error("Function not implemented.")
+}
+
