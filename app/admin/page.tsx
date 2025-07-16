@@ -51,6 +51,7 @@ import {
   ScrollText, // Für Audit- & Compliance-Protokollierung
   Activity, // Für Systemdiagnose & Monitoring (alternativ zu Monitor)
   Link as LinkIcon, // Für Integrationen, wenn Zap nicht passt
+  QrCode, // Für QR-Code Labels
 } from "lucide-react"
 
 export default function Page() {
@@ -128,10 +129,10 @@ export default function Page() {
       href: "/admin/license-policies",
     },
     {
-      title: "Helpdesk- & Ticket-Einstellungen",
-      description: "Konfiguration von Ticket-Kategorien, Prioritäten und SLAs.",
-      icon: LifeBuoy, // Oder Ticket
-      href: "/admin/helpdesk-tickets",
+      title: "QR-Code Labels",
+      description: "Generierung von QR-Codes für Asset-Tags und Labels.",
+      icon: QrCode,
+      href: "/admin/qr-labels",
     },
     {
       title: "Finanz- & Vertragsmanagement",
