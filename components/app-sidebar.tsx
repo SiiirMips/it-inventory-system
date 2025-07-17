@@ -551,7 +551,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <img 
               src="/logo.svg" 
               alt="IT Inventory System Logo" 
-              className="h-12 w-auto"
+              className="h-16 w-auto"
             />
           </a>
         </div>
