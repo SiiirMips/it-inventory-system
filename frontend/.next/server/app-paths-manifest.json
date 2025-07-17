@@ -1,0 +1,15 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/qr-labels/page": "app/admin/qr-labels/page.js",
+  "/assets/[assetID]/page": "app/assets/[assetID]/page.js",
+  "/assets/all/page": "app/assets/all/page.js",
+  "/assets/manual-entry/page": "app/assets/manual-entry/page.js",
+  "/assets/page": "app/assets/page.js",
+  "/assets/scan-network/page": "app/assets/scan-network/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/service/tickets/create/page": "app/service/tickets/create/page.js",
+  "/service/tickets/page": "app/service/tickets/page.js",
+  "/settings/page": "app/settings/page.js"
+}

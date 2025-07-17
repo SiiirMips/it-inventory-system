@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Projekte/it-inventory-system/app/assets/page.tsx"],"sourcesContent":["// app/assets/page.tsx\r\nimport { redirect } from 'next/navigation';\r\n\r\nexport default function AssetsRootPage() {\r\n  // Direkt weiterleiten zur \"Alle Assets\"-Seite\r\n  redirect('/assets/all');\r\n  // Oder alternativ hier eine Landing Page für Assets mit Einführungstext\r\n  // return (\r\n  //   <div>\r\n  //     <h1>Willkommen zur Asset-Verwaltung</h1>\r\n  //     <p>Wähle einen Bereich aus der Sidebar oder gehe zu <a href=\"/assets/all\">Alle Assets</a>.</p>\r\n  //   </div>\r\n  // );\r\n}"],"names":[],"mappings":"AAAA,sBAAsB;;;;AACtB;AAAA;;AAEe,SAAS;IACtB,8CAA8C;IAC9C,CAAA,GAAA,qLAAA,CAAA,WAAQ,AAAD,EAAE;AACT,wEAAwE;AACxE,WAAW;AACX,UAAU;AACV,+CAA+C;AAC/C,qGAAqG;AACrG,WAAW;AACX,KAAK;AACP","debugId":null}}]
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Projekte/it-inventory-system/app/assets/%5BassetID%5D/page.tsx"],"sourcesContent":["// app/assets/[assetId]/page.tsx\r\ninterface AssetDetailPageProps {\r\n  params: {\r\n    assetId: string; // Der dynamische Teil der URL\r\n  };\r\n}\r\n\r\nexport default function AssetDetailPage({ params }: AssetDetailPageProps) {\r\n  const { assetId } = params;\r\n  return (\r\n    <div>\r\n      <h1 className=\"text-3xl font-semibold mb-6\">Asset Details: {assetId}</h1>\r\n      <p className=\"text-lg text-muted-foreground\">Hier werden die detaillierten Informationen für Asset ID: {assetId} angezeigt.</p>\r\n      {/* Hier kommen später die Asset-Details */}\r\n    </div>\r\n  );\r\n}"],"names":[],"mappings":"AAAA,gCAAgC;;;;;;AAOjB,SAAS,gBAAgB,EAAE,MAAM,EAAwB;IACtE,MAAM,EAAE,OAAO,EAAE,GAAG;IACpB,qBACE,8OAAC;;0BACC,8OAAC;gBAAG,WAAU;;oBAA8B;oBAAgB;;;;;;;0BAC5D,8OAAC;gBAAE,WAAU;;oBAAgC;oBAA2D;oBAAQ;;;;;;;;;;;;;AAItH","debugId":null}}]
+}

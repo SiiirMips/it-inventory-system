@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///C:/Projekte/it-inventory-system/app/assets/create/page.tsx"],"sourcesContent":["// app/assets/create/page.tsx\r\nexport default function CreateAssetPage() {\r\n  return (\r\n    <div>\r\n      <h1 className=\"text-3xl font-semibold mb-6\">Neues Asset hinzufügen</h1>\r\n      <p className=\"text-lg text-muted-foreground\">Hier wird das Formular zum Erfassen neuer Assets erscheinen.</p>\r\n      {/* Hier kommt später dein Formular */}\r\n    </div>\r\n  );\r\n}"],"names":[],"mappings":"AAAA,6BAA6B;;;;;;AACd,SAAS;IACtB,qBACE,8OAAC;;0BACC,8OAAC;gBAAG,WAAU;0BAA8B;;;;;;0BAC5C,8OAAC;gBAAE,WAAU;0BAAgC;;;;;;;;;;;;AAInD","debugId":null}}]
+}
